@@ -1,0 +1,27 @@
+@import url(./__container/modal__container.css);
+@import url(./__title/modal__title.css);
+@import url(./__title/__type/modal__title_type_remove.css);
+@import url(./__input/modal__input.css);
+@import url(./__input/_type/modal__input_type_error.css);
+@import url(./__input-error-message/modal__input-error-message.css);
+@import url(./__input-error-message/_visible/modal__input-error-message_visible.css);
+@import url(./__button/modal__button.css);
+@import url(./__button/_disabled/modal__button_disabled.css);
+@import url(./__button/_type/modal__button_type_update.css);
+@import url(./__button/_type/modal__button_type_remove.css);
+@import url(./__close-button/modal__close-button.css);
+
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .5);
+  transition: all .2s linear;
+}

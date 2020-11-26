@@ -1,0 +1,16 @@
+.modal__input {
+  max-width: calc(100% - 72px);
+  width: 100%;
+  margin: 0 36px;
+  padding: 0 0 13px;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  outline: none;
+}
+
+@media all and (max-width: 400px) {
+  .modal__input {
+    max-width: calc(100% - 40px);
+    margin: 0 20px;
+  }
+}

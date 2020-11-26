@@ -1,0 +1,28 @@
+.modal__button {
+  color: #fff;
+  max-width: calc(100% - 72px);
+  width: 100%;
+  height: 50.15px;
+  margin: 32px 36px 36px;
+  background-color: #000;
+  border: none;
+  border-radius: 2px;
+  font-size: 18px;
+  line-height: 22px;
+  outline: none;
+}
+
+.modal__button:hover {
+  background-color: rgba(0, 0, 0, .8);
+  cursor: pointer;
+  transition: background-color 0.2s linear;
+}
+
+@media all and (max-width: 400px) {
+  .modal__button {
+    max-width: calc(100% - 40px);
+    margin: 0 20px 30px;
+    font-size: 14px;
+    line-height: 17px;
+  }
+}

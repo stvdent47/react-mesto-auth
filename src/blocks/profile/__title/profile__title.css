@@ -1,0 +1,13 @@
+.profile__title {
+  margin: 0 0 16px;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
+
+@media all and (max-width: 650px) {
+  .profile__title {
+    margin: 0;
+    justify-content: center;
+  }
+}

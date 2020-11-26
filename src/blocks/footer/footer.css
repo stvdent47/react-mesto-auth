@@ -1,0 +1,23 @@
+@import url(./__copyright/footer__copyright.css);
+
+.footer {
+  max-width: 882px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 0 60px;
+}
+
+@media all and (max-width: 900px) {
+  .footer {
+    max-width: calc(100% - 54px);
+    padding: 0 27px 60px;
+  }
+}
+
+@media all and (max-width: 650px) {
+  .footer {
+    max-width: calc(100% - 38px);
+    padding: 0 19px 60px;
+    margin: 0;
+  }
+}

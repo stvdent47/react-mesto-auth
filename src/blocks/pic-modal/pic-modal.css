@@ -1,0 +1,20 @@
+@import url(./__container/pic-modal__container.css);
+@import url(./__picture/pic-modal__picture.css);
+@import url(./__image/pic-modal__image.css);
+@import url(./__caption/pic-modal__caption.css);
+@import url(./__close-button/pic-modal__close-button.css);
+
+.pic-modal {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, .9);
+  opacity: 0;
+  visibility: hidden;
+  transition: all .2s linear;
+}

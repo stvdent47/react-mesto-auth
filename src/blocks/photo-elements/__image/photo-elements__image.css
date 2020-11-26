@@ -1,0 +1,11 @@
+.photo-elements__image {
+  display: block;
+  width: 282px;
+  height: 282px;
+  object-fit: cover;
+  margin: 0;
+}
+
+.photo-elements__image:hover {
+  cursor: pointer;
+}

@@ -1,0 +1,21 @@
+@import url(./__list/photo-elements__list.css);
+@import url(./__item/photo-elements__item.css);
+@import url(./__image/photo-elements__image.css);
+@import url(./__caption/photo-elements__caption.css);
+@import url(./__text/photo-elements__text.css);
+@import url(./__delete-button/photo-elements__delete-button.css);
+@import url(./__delete-button/_hidden/photo-elements__delete-button_hidden.css);
+@import url(./__like-container/photo-elements__like-container.css);
+@import url(./__like-button/photo-elements__like-button.css);
+@import url(./__like-counter/photo-elements__like-counter.css);
+
+.photo-elements {
+  margin: 0;
+  padding: 0 0 66px;
+}
+
+@media all and (max-width: 650px) {
+  .photo-elements {
+    padding: 0 0 48px;
+  }
+}

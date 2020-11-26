@@ -1,0 +1,11 @@
+.photo-elements__text {
+  max-width: 227px;
+  margin: 25px 0 31px 21px;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}

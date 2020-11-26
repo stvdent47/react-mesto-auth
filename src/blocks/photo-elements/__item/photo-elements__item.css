@@ -1,0 +1,7 @@
+.photo-elements__item {
+  position: relative;
+  max-width: 282px;
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+}

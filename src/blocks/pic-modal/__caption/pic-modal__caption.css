@@ -1,0 +1,10 @@
+.pic-modal__caption {
+  max-width: 75vw;
+  color: #fff;
+  font-size: 12px;
+  line-height: 15px;
+  padding: 10px 0 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}

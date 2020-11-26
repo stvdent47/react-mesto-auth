@@ -1,0 +1,20 @@
+.modal__title {
+  max-width: calc(100% - 68px);
+  width: 100%;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29px;
+  margin: 0;
+  padding: 36px 34px 54px;
+}
+
+@media all and (max-width: 400px) {
+  .modal__title {
+    max-width: calc(100% - 40px);
+    font-size: 18px;
+    line-height: 22px;
+    margin: 0;
+    padding: 30px 20px 36px;
+  }
+}

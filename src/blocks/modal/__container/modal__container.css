@@ -1,0 +1,20 @@
+.modal__container {
+  max-width: 430px;
+  width: 100%;
+  background-color: #fff;
+  position: relative;
+  margin: 0;
+  border-radius: 10px;
+}
+
+@media all and (max-width: 550px) {
+  .modal__container {
+    max-width: 300px;
+  }
+}
+
+@media all and (max-width: 400px) {
+  .modal__container {
+    max-width: 240px;
+  }
+}

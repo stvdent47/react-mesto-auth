@@ -1,0 +1,12 @@
+.profile__photo {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+@media all and (max-width: 650px) {
+  .profile__photo {
+    margin: 0;
+  }
+}
