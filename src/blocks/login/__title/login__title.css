@@ -1,7 +1,5 @@
 .login__title {
-  color: #fff;
-  font-family: Inter;
-  font-style: normal;
+  max-width: min-content;
   font-weight: 900;
   font-size: 24px;
   line-height: 29px;
