@@ -1,0 +1,11 @@
+@import url(./__title/login__title.css);
+@import url(./__input/login__input.css);
+
+.login {
+  max-width: 358px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  padding: 60px 0 0;
+}
