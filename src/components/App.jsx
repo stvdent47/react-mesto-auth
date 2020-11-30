@@ -6,8 +6,12 @@ import EditProfilePopup from './EditProfilePopup.jsx';
 import AddPlacePopup from './AddPlacePopup.jsx';
 import EditAvatarPopup from './EditAvatarPopup.jsx';
 import ImagePopup from './ImagePopup.jsx';
+import Login from './Login.jsx';
+import Register from './Register.jsx';
+import ProtectedRoute from './ProtectedRoute.jsx';
 import api from '../utils/Api.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
+import { Route, Switch } from 'react-router-dom';
 
 const App = () => {
   /**
@@ -22,7 +26,9 @@ const App = () => {
    * profile editing
    */
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
-  const [editSubmitButtonState, seteditSubmitButtonState] = useState('Сохранить');
+  const [editSubmitButtonState, seteditSubmitButtonState] = useState(
+    'Сохранить'
+  );
 
   const handleEditProfileClick = () => {
     setIsEditProfilePopupOpen(true);
@@ -51,7 +57,9 @@ const App = () => {
    * new card adding
    */
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
-  const [addCardSubmitButtonState, setAddCardSubmitButtonState] = useState('Сохранить');
+  const [addCardSubmitButtonState, setAddCardSubmitButtonState] = useState(
+    'Сохранить'
+  );
 
   const handleAddPlaceClick = () => {
     setIsAddPlacePopupOpen(true);
@@ -98,7 +106,10 @@ const App = () => {
    * avatar updating
    */
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
-  const [avatarUpdateSubmitButtonState, setAvatarUpdateSubmitButtonState] = useState('Сохранить');
+  const [
+    avatarUpdateSubmitButtonState,
+    setAvatarUpdateSubmitButtonState,
+  ] = useState('Сохранить');
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true);
@@ -142,42 +153,53 @@ const App = () => {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <Header />
-      <Main
-        onEditProfile={handleEditProfileClick}
-        onAddPlace={handleAddPlaceClick}
-        onEditAvatar={handleEditAvatarClick}
-        onCardClick={handleCardClick}
-        cards={cards}
-        onCardLike={handleCardLike}
-        onCardDelete={handleCardDelete}
-      />
-      <Footer />
-      <EditProfilePopup
-        isOpen={isEditProfilePopupOpen}
-        onClose={closeAllPopups}
-        onUpdateUser={handleUpdateUser}
-        submitButtonState={editSubmitButtonState}
-      />
-      <AddPlacePopup
-        isOpen={isAddPlacePopupOpen}
-        onClose={closeAllPopups}
-        onAddPlace={handleAddPlace}
-        submitButtonState={addCardSubmitButtonState}
-      />
+      <Switch>
+        <Route exact path='/register'>
+          <Register />
+        </Route>
+        <Route exact path='/login'>
+          <Login />
+        </Route>
+        {/* <ProtectedRoute /> */}
+        <Route exact path='/'>
+          <Header />
+          <Main
+            onEditProfile={handleEditProfileClick}
+            onAddPlace={handleAddPlaceClick}
+            onEditAvatar={handleEditAvatarClick}
+            onCardClick={handleCardClick}
+            cards={cards}
+            onCardLike={handleCardLike}
+            onCardDelete={handleCardDelete}
+          />
+          <Footer />
+          <EditProfilePopup
+            isOpen={isEditProfilePopupOpen}
+            onClose={closeAllPopups}
+            onUpdateUser={handleUpdateUser}
+            submitButtonState={editSubmitButtonState}
+          />
+          <AddPlacePopup
+            isOpen={isAddPlacePopupOpen}
+            onClose={closeAllPopups}
+            onAddPlace={handleAddPlace}
+            submitButtonState={addCardSubmitButtonState}
+          />
 
-      <EditAvatarPopup
-        isOpen={isEditAvatarPopupOpen}
-        onClose={closeAllPopups}
-        onUpdateAvatar={handleUpdateAvatar}
-        submitButtonState={avatarUpdateSubmitButtonState}
-      />
-      <ImagePopup
-        name='pic-modal'
-        isOpen={isImagePopupOpen}
-        onClose={closeAllPopups}
-        card={selectedCard}
-      />
+          <EditAvatarPopup
+            isOpen={isEditAvatarPopupOpen}
+            onClose={closeAllPopups}
+            onUpdateAvatar={handleUpdateAvatar}
+            submitButtonState={avatarUpdateSubmitButtonState}
+          />
+          <ImagePopup
+            name='pic-modal'
+            isOpen={isImagePopupOpen}
+            onClose={closeAllPopups}
+            card={selectedCard}
+          />
+        </Route>
+      </Switch>
     </CurrentUserContext.Provider>
   );
 };
