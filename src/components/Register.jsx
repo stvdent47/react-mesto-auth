@@ -1,16 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from './Header.jsx';
 
 const Register = (props) => {
+  const [userData, setUserData] = useState({
+    email: '',
+    password: '',
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUserData({
+      ...userData,
+      [name]: value,
+    });
+  };
+
   return (
     <>
       <Header />
       <div className='login'>
         <div className='login__containter'>
           <h1 className='login__title'>Регистрация</h1>
-          <input type='text' className='login__input' placeholder='Email' />
-          <input type='text' className='login__input' placeholder='Пароль' />
+          <input
+            type='email'
+            name='email'
+            className='login__input'
+            placeholder='Email'
+            onChange={handleInputChange}
+            value={userData.email}
+          />
+          <input
+            type='password'
+            name='password'
+            className='login__input'
+            placeholder='Пароль'
+            onChange={handleInputChange}
+            value={userData.password}
+          />
         </div>
 
         <div className='login__button-containter'>

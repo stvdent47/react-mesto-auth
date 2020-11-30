@@ -8,6 +8,7 @@
   border-bottom: #fff 1px solid;
   font-size: 14px;
   line-height: 17px;
+  outline: none;
 }
 
 .login__input::placeholder {

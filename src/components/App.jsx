@@ -6,11 +6,12 @@ import EditProfilePopup from './EditProfilePopup.jsx';
 import AddPlacePopup from './AddPlacePopup.jsx';
 import EditAvatarPopup from './EditAvatarPopup.jsx';
 import ImagePopup from './ImagePopup.jsx';
+import Login from './Login.jsx';
+import Register from './Register.jsx';
+import ProtectedRoute from './ProtectedRoute.jsx';
 import api from '../utils/Api.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 import { Route, Switch } from 'react-router-dom';
-import Login from './Login.jsx';
-import Register from './Register.jsx';
 
 const App = () => {
   /**
@@ -159,6 +160,7 @@ const App = () => {
         <Route exact path='/login'>
           <Login />
         </Route>
+        {/* <ProtectedRoute /> */}
         <Route exact path='/'>
           <Header />
           <Main
