@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from './Header.jsx';
+import * as auth from '../utils.js';
 
 const Register = (props) => {
   const [userData, setUserData] = useState({
@@ -16,28 +17,37 @@ const Register = (props) => {
     });
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const { email, password } = userData;
+    auth.signup(email, password);
+  };
+
   return (
     <>
       <Header page='login' />
       <div className='login'>
         <div className='login__containter'>
           <h1 className='login__title'>Регистрация</h1>
-          <input
-            type='email'
-            name='email'
-            className='login__input'
-            placeholder='Email'
-            onChange={handleInputChange}
-            value={userData.email}
-          />
-          <input
-            type='password'
-            name='password'
-            className='login__input'
-            placeholder='Пароль'
-            onChange={handleInputChange}
-            value={userData.password}
-          />
+          <form action='#' method='post' onSubmit={handleSubmit}>
+            <input
+              type='email'
+              name='email'
+              className='login__input'
+              placeholder='Email'
+              onChange={handleInputChange}
+              value={userData.email}
+            />
+            <input
+              type='password'
+              name='password'
+              className='login__input'
+              placeholder='Пароль'
+              onChange={handleInputChange}
+              value={userData.password}
+            />
+          </form>
         </div>
 
         <div className='login__button-containter'>
