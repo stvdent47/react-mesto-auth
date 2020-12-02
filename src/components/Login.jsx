@@ -4,7 +4,7 @@ import Header from './Header.jsx';
 const Login = (props) => {
   return (
     <>
-      <Header />
+      <Header page='register' />
       <div className='login'>
         <div className='login__containter'>
           <h1 className='login__title'>Вход</h1>

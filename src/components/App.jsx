@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Header from './Header.jsx';
 import Main from './Main.jsx';
-import Footer from './Footer.jsx';
 import EditProfilePopup from './EditProfilePopup.jsx';
 import AddPlacePopup from './AddPlacePopup.jsx';
 import EditAvatarPopup from './EditAvatarPopup.jsx';
@@ -11,7 +9,7 @@ import Register from './Register.jsx';
 import ProtectedRoute from './ProtectedRoute.jsx';
 import api from '../utils/Api.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 const App = () => {
   /**
@@ -22,6 +20,8 @@ const App = () => {
     about: '',
     avatar: '',
   });
+
+  const [loggedIn, setLoggedIn] = useState(false);
   /**
    * profile editing
    */
@@ -157,49 +157,58 @@ const App = () => {
         <Route exact path='/register'>
           <Register />
         </Route>
+
         <Route exact path='/login'>
           <Login />
         </Route>
-        {/* <ProtectedRoute /> */}
-        <Route exact path='/'>
-          <Header />
-          <Main
-            onEditProfile={handleEditProfileClick}
-            onAddPlace={handleAddPlaceClick}
-            onEditAvatar={handleEditAvatarClick}
-            onCardClick={handleCardClick}
-            cards={cards}
-            onCardLike={handleCardLike}
-            onCardDelete={handleCardDelete}
-          />
-          <Footer />
-          <EditProfilePopup
-            isOpen={isEditProfilePopupOpen}
-            onClose={closeAllPopups}
-            onUpdateUser={handleUpdateUser}
-            submitButtonState={editSubmitButtonState}
-          />
-          <AddPlacePopup
-            isOpen={isAddPlacePopupOpen}
-            onClose={closeAllPopups}
-            onAddPlace={handleAddPlace}
-            submitButtonState={addCardSubmitButtonState}
-          />
 
-          <EditAvatarPopup
-            isOpen={isEditAvatarPopupOpen}
-            onClose={closeAllPopups}
-            onUpdateAvatar={handleUpdateAvatar}
-            submitButtonState={avatarUpdateSubmitButtonState}
-          />
-          <ImagePopup
-            name='pic-modal'
-            isOpen={isImagePopupOpen}
-            onClose={closeAllPopups}
-            card={selectedCard}
-          />
+        <ProtectedRoute
+          path='/feed'
+          loggedIn={loggedIn}
+          component={Main}
+          onEditProfile={handleEditProfileClick}
+          onAddPlace={handleAddPlaceClick}
+          onEditAvatar={handleEditAvatarClick}
+          onCardClick={handleCardClick}
+          cards={cards}
+          onCardLike={handleCardLike}
+          onCardDelete={handleCardDelete}
+        />
+
+        <Route exact path='/'>
+          {loggedIn ? <Redirect to='/feed' /> : <Redirect to='/login' />}
+        </Route>
+        
+        <Route path='/*'>
+          {loggedIn ? <Redirect to='/feed' /> : <Redirect to='/login' />}
         </Route>
       </Switch>
+
+      <EditProfilePopup
+        isOpen={isEditProfilePopupOpen}
+        onClose={closeAllPopups}
+        onUpdateUser={handleUpdateUser}
+        submitButtonState={editSubmitButtonState}
+      />
+      <AddPlacePopup
+        isOpen={isAddPlacePopupOpen}
+        onClose={closeAllPopups}
+        onAddPlace={handleAddPlace}
+        submitButtonState={addCardSubmitButtonState}
+      />
+
+      <EditAvatarPopup
+        isOpen={isEditAvatarPopupOpen}
+        onClose={closeAllPopups}
+        onUpdateAvatar={handleUpdateAvatar}
+        submitButtonState={avatarUpdateSubmitButtonState}
+      />
+      <ImagePopup
+        name='pic-modal'
+        isOpen={isImagePopupOpen}
+        onClose={closeAllPopups}
+        card={selectedCard}
+      />
     </CurrentUserContext.Provider>
   );
 };
