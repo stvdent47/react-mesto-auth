@@ -4,15 +4,15 @@ export const signup = (email, password) => {
   return fetch(`${BASE_URL}/signup`, {
     method: 'POST',
     headers: {
+      'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify({ password, email }),
   })
     .then((res) => {
       if (res.ok) {
-        res.json();
+        return res.json();
       }
     })
-    .then((res) => res)
-    .catch((err) => console.error(err));
+    .then((res) => res);
 };
