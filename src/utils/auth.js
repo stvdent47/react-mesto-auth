@@ -29,6 +29,14 @@ export const signin = (email, password) => {
     .then(resCheck);
 }
 
-export const getContent = () => {
-
+export const getContent = (token) => {
+  return fetch(`${BASE_URL}/users/me`, {
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json',
+      "Content-Type": "application/json",
+      "Authorization" : `Bearer ${token}`
+    }
+  })
+    .then(resCheck);
 }
