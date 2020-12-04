@@ -162,7 +162,19 @@ const App = () => {
 
   const tokenCheck = () => {
     const jwt = localStorage.getItem('jwt');
-    console.log(jwt)
+    if (jwt) {
+      auth.getContent(jwt)
+        .then((res) => {
+          if (res) {
+            setUserData({
+              email: res.email,
+            });
+            setLoggedIn(true);
+            history.push('/feed');
+          }
+        })
+        .catch((err) => console.error(err));
+    }
   }
 
   useEffect(() => {
@@ -173,6 +185,7 @@ const App = () => {
         setCards(initialCards);
       })
       .catch((err) => console.error(err));
+      tokenCheck();
   }, []);
 
   return (
