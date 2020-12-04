@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Header from './Header.jsx';
-import * as auth from '../utils/auth.js';
 
 const Register = (props) => {
   const [userData, setUserData] = useState({
     email: '',
     password: '',
   });
-
-  const history = useHistory();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -21,17 +18,9 @@ const Register = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
     const { email, password } = userData;
-    console.log(userData)
-    auth
-      .signup(email, password)
-      .then((res) => {
-        console.log(res)
-        if (res) {
-          history.push('/login');
-        }
-      })
-      .catch((err) => console.error(err));
+    props.handleSignup(email, password);
   };
 
   return (

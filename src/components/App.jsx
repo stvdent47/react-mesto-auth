@@ -8,8 +8,9 @@ import Login from './Login.jsx';
 import Register from './Register.jsx';
 import ProtectedRoute from './ProtectedRoute.jsx';
 import api from '../utils/Api.js';
+import * as auth from '../utils/auth.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 
 const App = () => {
   /**
@@ -22,13 +23,12 @@ const App = () => {
   });
 
   const [loggedIn, setLoggedIn] = useState(false);
+  const [userData, setUserData] = useState({ email: '' });
   /**
    * profile editing
    */
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
-  const [editSubmitButtonState, seteditSubmitButtonState] = useState(
-    'Сохранить'
-  );
+  const [editSubmitButtonState, seteditSubmitButtonState] = useState('Сохранить');
 
   const handleEditProfileClick = () => {
     setIsEditProfilePopupOpen(true);
@@ -57,9 +57,7 @@ const App = () => {
    * new card adding
    */
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
-  const [addCardSubmitButtonState, setAddCardSubmitButtonState] = useState(
-    'Сохранить'
-  );
+  const [addCardSubmitButtonState, setAddCardSubmitButtonState] = useState('Сохранить');
 
   const handleAddPlaceClick = () => {
     setIsAddPlacePopupOpen(true);
@@ -106,10 +104,7 @@ const App = () => {
    * avatar updating
    */
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
-  const [
-    avatarUpdateSubmitButtonState,
-    setAvatarUpdateSubmitButtonState,
-  ] = useState('Сохранить');
+  const [avatarUpdateSubmitButtonState, setAvatarUpdateSubmitButtonState] = useState('Сохранить');
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true);
@@ -141,6 +136,35 @@ const App = () => {
     setIsImagePopupOpen(false);
   };
 
+  const history = useHistory();
+  const handleLogin = (email, password) => {
+    auth
+      .signin(email, password)
+      .then((res) => {
+        if (res.token) {
+          localStorage.setItem('jwt', res.token);
+          setLoggedIn(true);
+          setUserData({
+            email,
+          });
+          history.push('/feed');
+        }
+      })
+      .catch((err) => console.error(err));
+  };
+
+  const handleSignup = (email, password) => {
+    auth
+      .signup(email, password)
+      .then(history.push('/login'))
+      .catch((err) => console.error(err));
+  };
+
+  const tokenCheck = () => {
+    const jwt = localStorage.getItem('jwt');
+    console.log(jwt)
+  }
+
   useEffect(() => {
     Promise.all([api.getProfileInfo(), api.getCards()])
       .then((res) => {
@@ -155,16 +179,17 @@ const App = () => {
     <CurrentUserContext.Provider value={currentUser}>
       <Switch>
         <Route exact path='/register'>
-          <Register />
+          <Register handleSignup={handleSignup} />
         </Route>
 
         <Route exact path='/login'>
-          <Login />
+          <Login handleLogin={handleLogin} />
         </Route>
 
         <ProtectedRoute
           path='/feed'
           loggedIn={loggedIn}
+          userData={userData}
           component={Main}
           onEditProfile={handleEditProfileClick}
           onAddPlace={handleAddPlaceClick}
@@ -178,10 +203,8 @@ const App = () => {
         <Route exact path='/'>
           {loggedIn ? <Redirect to='/feed' /> : <Redirect to='/login' />}
         </Route>
-        
-        <Route path='/*'>
-          {loggedIn ? <Redirect to='/feed' /> : <Redirect to='/login' />}
-        </Route>
+
+        <Route path='/*'>{loggedIn ? <Redirect to='/feed' /> : <Redirect to='/login' />}</Route>
       </Switch>
 
       <EditProfilePopup

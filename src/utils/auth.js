@@ -1,5 +1,7 @@
 export const BASE_URL = 'https://auth.nomoreparties.co';
 
+const resCheck = (res) => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
+
 export const signup = (email, password) => {
   return fetch(`${BASE_URL}/signup`, {
     method: 'POST',
@@ -9,10 +11,24 @@ export const signup = (email, password) => {
     },
     body: JSON.stringify({ password, email }),
   })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-    })
-    .then((res) => res);
+    .then(resCheck);
 };
+
+export const signin = (email, password) => {
+  return fetch(`${BASE_URL}/signin`, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      password,
+      email
+    }),
+  })
+    .then(resCheck);
+}
+
+export const getContent = () => {
+
+}
