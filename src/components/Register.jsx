@@ -25,7 +25,7 @@ const Register = (props) => {
 
   return (
     <>
-      <Header page='login' />
+      <Header page='register' />
       <div className='login'>
         <div className='login__containter'>
           <h1 className='login__title'>Регистрация</h1>
