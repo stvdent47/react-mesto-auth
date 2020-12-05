@@ -3,6 +3,7 @@
 @import url(./blocks/page/page.css);
 @import url(./blocks/root/root.css);
 @import url(./blocks/header/header.css);
+@import url(./blocks/login/login.css);
 @import url(./blocks/main/main.css);
 @import url(./blocks/profile/profile.css);
 @import url(./blocks/photo-elements/photo-elements.css);
@@ -12,3 +13,5 @@
 @import url(./blocks/modal/_opened/modal_opened.css);
 @import url(./blocks/pic-modal/pic-modal.css);
 @import url(./blocks/pic-modal/_opened/pic-modal_opened.css);
+@import url(./blocks/signup-modal/signup-modal.css);
+@import url(./blocks/signup-modal/_opened/signup-modal_opened.css);

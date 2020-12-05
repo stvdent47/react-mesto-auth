@@ -1,0 +1,13 @@
+@import url(./_signout/header__link_signout.css);
+
+.header__link {
+  color: #fff;
+  text-decoration: none;
+  margin: 0;
+  width: min-content;
+  height: min-content;
+}
+
+.header__link:hover {
+  opacity: .6;
+}

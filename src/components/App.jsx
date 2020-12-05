@@ -1,30 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import Header from './Header.jsx';
 import Main from './Main.jsx';
-import Footer from './Footer.jsx';
 import EditProfilePopup from './EditProfilePopup.jsx';
 import AddPlacePopup from './AddPlacePopup.jsx';
 import EditAvatarPopup from './EditAvatarPopup.jsx';
 import ImagePopup from './ImagePopup.jsx';
+import Login from './Login.jsx';
+import Register from './Register.jsx';
+import ProtectedRoute from './ProtectedRoute.jsx';
 import api from '../utils/Api.js';
+import * as auth from '../utils/auth.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
+import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 
 const App = () => {
   /**
-   * user
+   * user states
    */
   const [currentUser, setCurrentUser] = useState({
     name: '',
     about: '',
     avatar: '',
   });
+
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [userData, setUserData] = useState({ email: '' });
   /**
    * profile editing
    */
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [editSubmitButtonState, seteditSubmitButtonState] = useState('Сохранить');
 
-  const handleEditProfileClick = () => {
+  const openEditProfileModal = () => {
     setIsEditProfilePopupOpen(true);
   };
 
@@ -53,7 +59,7 @@ const App = () => {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [addCardSubmitButtonState, setAddCardSubmitButtonState] = useState('Сохранить');
 
-  const handleAddPlaceClick = () => {
+  const openAddPlaceModal = () => {
     setIsAddPlacePopupOpen(true);
   };
 
@@ -100,7 +106,7 @@ const App = () => {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [avatarUpdateSubmitButtonState, setAvatarUpdateSubmitButtonState] = useState('Сохранить');
 
-  const handleEditAvatarClick = () => {
+  const openEditAvatarModal = () => {
     setIsEditAvatarPopupOpen(true);
   };
 
@@ -129,6 +135,78 @@ const App = () => {
     setIsEditAvatarPopupOpen(false);
     setIsImagePopupOpen(false);
   };
+  /**
+   * signup / login functionality
+   */
+  const history = useHistory();
+  const handleLogin = (email, password) => {
+    auth
+      .signin(email, password)
+      .then((res) => {
+        if (res.token) {
+          localStorage.setItem('jwt', res.token);
+          setUserData({
+            email,
+          });
+          setLoggedIn(true);
+          history.push('/feed');
+        }
+      })
+      .catch((err) => console.error(err));
+  };
+
+  const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
+  const [signupResult, setSignupResult] = useState(false);
+
+  const closeSignupModal = () => {
+    if (signupResult) {
+      setIsSignupModalOpen(false);
+      history.push('/signin');
+    } else {
+      setIsSignupModalOpen(false);
+    }
+  };
+
+  const handleSignup = (email, password) => {
+    auth
+      .signup(email, password)
+      .then(() => {
+        setSignupResult(true);
+        setIsSignupModalOpen(true);
+      })
+      .catch((err) => {
+        setIsSignupModalOpen(true);
+        console.error(err);
+      });
+  };
+  /**
+   * checking jwt token when reloading page
+   */
+  const tokenCheck = () => {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      auth
+        .getContent(jwt)
+        .then((res) => {
+          if (res) {
+            setUserData({
+              email: res.email,
+            });
+            setLoggedIn(true);
+            history.push('/feed');
+          }
+        })
+        .catch((err) => console.error(err));
+    }
+  };
+
+  const handleSignOut = () => {
+    localStorage.removeItem('jwt');
+    setUserData({
+      email: '',
+    });
+    setLoggedIn(false);
+  };
 
   useEffect(() => {
     Promise.all([api.getProfileInfo(), api.getCards()])
@@ -138,21 +216,47 @@ const App = () => {
         setCards(initialCards);
       })
       .catch((err) => console.error(err));
+    tokenCheck();
   }, []);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <Header />
-      <Main
-        onEditProfile={handleEditProfileClick}
-        onAddPlace={handleAddPlaceClick}
-        onEditAvatar={handleEditAvatarClick}
-        onCardClick={handleCardClick}
-        cards={cards}
-        onCardLike={handleCardLike}
-        onCardDelete={handleCardDelete}
-      />
-      <Footer />
+      <Switch>
+        <Route exact path='/signin'>
+          <Login handleLogin={handleLogin} />
+        </Route>
+
+        <Route exact path='/signup'>
+          <Register
+            handleSignup={handleSignup}
+            signupResult={signupResult}
+            isSignupModalOpen={isSignupModalOpen}
+            onClose={closeSignupModal}
+          />
+        </Route>
+
+        <ProtectedRoute
+          path='/feed'
+          component={Main}
+          loggedIn={loggedIn}
+          userData={userData}
+          onEditProfile={openEditProfileModal}
+          onAddPlace={openAddPlaceModal}
+          onEditAvatar={openEditAvatarModal}
+          onCardClick={handleCardClick}
+          cards={cards}
+          onCardLike={handleCardLike}
+          onCardDelete={handleCardDelete}
+          handleSignOut={handleSignOut}
+        />
+
+        <Route exact path='/'>
+          {loggedIn ? <Redirect to='/feed' /> : <Redirect to='/signin' />}
+        </Route>
+
+        <Route path='/*'>{loggedIn ? <Redirect to='/feed' /> : <Redirect to='/signin' />}</Route>
+      </Switch>
+
       <EditProfilePopup
         isOpen={isEditProfilePopupOpen}
         onClose={closeAllPopups}

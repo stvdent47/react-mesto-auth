@@ -1,0 +1,6 @@
+.login__button-caption {
+
+  display: flex;
+  justify-content: center;
+  padding: 15px 0 50px;
+}
