@@ -8,6 +8,12 @@ const Header = (props) => {
     headerLink = <NavLink to='/login' className='header__link'>Войти</NavLink>
   } else if (props.page === 'register') {
     headerLink = <NavLink to='/register' className='header__link'>Регистрация</NavLink>
+  } else if (props.page === 'feed') {
+    headerLink = 
+    <>
+      <p className="header__info"></p>
+      <NavLink to='/register' className='header__link header__link_signout'>Выйти</NavLink>
+    </>
   }
 
   return (

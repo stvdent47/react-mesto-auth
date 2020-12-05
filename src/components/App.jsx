@@ -201,9 +201,9 @@ const App = () => {
 
         <ProtectedRoute
           path='/feed'
+          component={Main}
           loggedIn={loggedIn}
           userData={userData}
-          component={Main}
           onEditProfile={handleEditProfileClick}
           onAddPlace={handleAddPlaceClick}
           onEditAvatar={handleEditAvatarClick}

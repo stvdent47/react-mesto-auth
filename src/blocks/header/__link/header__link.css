@@ -1,12 +1,13 @@
-.login__link {
+@import url(./_signout/header__link_signout.css);
+
+.header__link {
   color: #fff;
   text-decoration: none;
-  display: inline;
-  margin-left: 5px;
+  margin: 0;
   width: min-content;
   height: min-content;
 }
 
-.login__link:hover {
+.header__link:hover {
   opacity: .6;
 }
