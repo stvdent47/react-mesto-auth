@@ -24,7 +24,7 @@ const Login = (props) => {
 
   return (
     <>
-      <Header page='login' />
+      <Header page='signin' />
       <div className='login'>
         <div className='login__containter'>
           <h1 className='login__title'>Вход</h1>

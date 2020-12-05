@@ -13,3 +13,5 @@
 @import url(./blocks/modal/_opened/modal_opened.css);
 @import url(./blocks/pic-modal/pic-modal.css);
 @import url(./blocks/pic-modal/_opened/pic-modal_opened.css);
+@import url(./blocks/signup-modal/signup-modal.css);
+@import url(./blocks/signup-modal/_opened/signup-modal_opened.css);
