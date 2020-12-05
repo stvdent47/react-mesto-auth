@@ -1,4 +1,7 @@
 @import url(./__logo/header__logo.css);
+@import url(./__nav/header__nav.css);
+@import url(./__info/header__info.css);
+@import url(./__link/header__link.css);
 
 .header {
   max-width: 882px;
@@ -6,6 +9,10 @@
   margin: 0 auto;
   padding: 45px 0 0;
   border-bottom: 1px solid rgba(84, 84, 84, .7);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  /* align-items: center; */
 }
 
 @media all and (max-width: 954px) {

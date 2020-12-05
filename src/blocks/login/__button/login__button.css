@@ -7,3 +7,8 @@
   font-size: 18px;
   line-height: 22px;
 }
+
+.login__button:hover {
+  cursor: pointer;
+  opacity: .85;
+}

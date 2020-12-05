@@ -143,10 +143,10 @@ const App = () => {
       .then((res) => {
         if (res.token) {
           localStorage.setItem('jwt', res.token);
-          setLoggedIn(true);
           setUserData({
             email,
           });
+          setLoggedIn(true);
           history.push('/feed');
         }
       })
@@ -163,7 +163,8 @@ const App = () => {
   const tokenCheck = () => {
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
-      auth.getContent(jwt)
+      auth
+        .getContent(jwt)
         .then((res) => {
           if (res) {
             setUserData({
@@ -175,7 +176,15 @@ const App = () => {
         })
         .catch((err) => console.error(err));
     }
-  }
+  };
+
+  const handleSignOut = () => {
+    localStorage.removeItem('jwt');
+    setUserData({
+      email: '',
+    });
+    setLoggedIn(false);
+  };
 
   useEffect(() => {
     Promise.all([api.getProfileInfo(), api.getCards()])
@@ -185,25 +194,25 @@ const App = () => {
         setCards(initialCards);
       })
       .catch((err) => console.error(err));
-      tokenCheck();
+    tokenCheck();
   }, []);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <Switch>
-        <Route exact path='/register'>
-          <Register handleSignup={handleSignup} />
-        </Route>
-
         <Route exact path='/login'>
           <Login handleLogin={handleLogin} />
         </Route>
 
+        <Route exact path='/register'>
+          <Register handleSignup={handleSignup} />
+        </Route>
+
         <ProtectedRoute
           path='/feed'
+          component={Main}
           loggedIn={loggedIn}
           userData={userData}
-          component={Main}
           onEditProfile={handleEditProfileClick}
           onAddPlace={handleAddPlaceClick}
           onEditAvatar={handleEditAvatarClick}
@@ -211,6 +220,7 @@ const App = () => {
           cards={cards}
           onCardLike={handleCardLike}
           onCardDelete={handleCardDelete}
+          handleSignOut={handleSignOut}
         />
 
         <Route exact path='/'>

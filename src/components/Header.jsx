@@ -4,10 +4,17 @@ import logo from '../images/logo.svg';
 
 const Header = (props) => {
   let headerLink;
+
   if (props.page === 'login') {
-    headerLink = <NavLink to='/login' className='header__link'>Войти</NavLink>
-  } else if (props.page === 'register') {
     headerLink = <NavLink to='/register' className='header__link'>Регистрация</NavLink>
+  } else if (props.page === 'register') {
+    headerLink = <NavLink to='/login' className='header__link'>Войти</NavLink>
+  } else if (props.page === 'feed') {
+    headerLink = 
+    <nav className='header__nav'>
+      <p className="header__info">{props.userData.email}</p>
+      <NavLink to='/login' className='header__link header__link_signout' onClick={props.handleSignOut}>Выйти</NavLink>
+    </nav>
   }
 
   return (
