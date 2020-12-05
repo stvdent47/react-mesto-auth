@@ -14,7 +14,7 @@ import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 
 const App = () => {
   /**
-   * user
+   * user states
    */
   const [currentUser, setCurrentUser] = useState({
     name: '',
@@ -30,7 +30,7 @@ const App = () => {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [editSubmitButtonState, seteditSubmitButtonState] = useState('Сохранить');
 
-  const handleEditProfileClick = () => {
+  const openEditProfileModal = () => {
     setIsEditProfilePopupOpen(true);
   };
 
@@ -59,7 +59,7 @@ const App = () => {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [addCardSubmitButtonState, setAddCardSubmitButtonState] = useState('Сохранить');
 
-  const handleAddPlaceClick = () => {
+  const openAddPlaceModal = () => {
     setIsAddPlacePopupOpen(true);
   };
 
@@ -106,7 +106,7 @@ const App = () => {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [avatarUpdateSubmitButtonState, setAvatarUpdateSubmitButtonState] = useState('Сохранить');
 
-  const handleEditAvatarClick = () => {
+  const openEditAvatarModal = () => {
     setIsEditAvatarPopupOpen(true);
   };
 
@@ -135,7 +135,9 @@ const App = () => {
     setIsEditAvatarPopupOpen(false);
     setIsImagePopupOpen(false);
   };
-
+  /**
+   * signup / login functionality
+   */
   const history = useHistory();
   const handleLogin = (email, password) => {
     auth
@@ -153,13 +155,33 @@ const App = () => {
       .catch((err) => console.error(err));
   };
 
+  const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
+  const [signupResult, setSignupResult] = useState(false);
+
+  const closeSignupModal = () => {
+    if (signupResult) {
+      setIsSignupModalOpen(false);
+      history.push('/login');
+    } else {
+      setIsSignupModalOpen(false);
+    }
+  };
+
   const handleSignup = (email, password) => {
     auth
       .signup(email, password)
-      .then(history.push('/login'))
-      .catch((err) => console.error(err));
+      .then(() => {
+        setSignupResult(true);
+        setIsSignupModalOpen(true);
+      })
+      .catch((err) => {
+        setIsSignupModalOpen(true);
+        console.error(err);
+      });
   };
-
+  /**
+   * checking jwt token when reloading page
+   */
   const tokenCheck = () => {
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
@@ -205,7 +227,12 @@ const App = () => {
         </Route>
 
         <Route exact path='/register'>
-          <Register handleSignup={handleSignup} />
+          <Register
+            handleSignup={handleSignup}
+            signupResult={signupResult}
+            isSignupModalOpen={isSignupModalOpen}
+            onClose={closeSignupModal}
+          />
         </Route>
 
         <ProtectedRoute
@@ -213,9 +240,9 @@ const App = () => {
           component={Main}
           loggedIn={loggedIn}
           userData={userData}
-          onEditProfile={handleEditProfileClick}
-          onAddPlace={handleAddPlaceClick}
-          onEditAvatar={handleEditAvatarClick}
+          onEditProfile={openEditProfileModal}
+          onAddPlace={openAddPlaceModal}
+          onEditAvatar={openEditAvatarModal}
           onCardClick={handleCardClick}
           cards={cards}
           onCardLike={handleCardLike}

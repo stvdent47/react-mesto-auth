@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from './Header.jsx';
+import SignupResultModal from './SignupResultModal.jsx';
 
 const Register = (props) => {
   const [userData, setUserData] = useState({
@@ -8,6 +9,7 @@ const Register = (props) => {
     password: '',
   });
 
+  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUserData({
@@ -15,13 +17,13 @@ const Register = (props) => {
       [name]: value,
     });
   };
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     
     const { email, password } = userData;
     props.handleSignup(email, password);
-  };
+  };  
 
   return (
     <>
@@ -64,6 +66,8 @@ const Register = (props) => {
           </div>
         </div>
       </div>
+
+      <SignupResultModal signupResult={props.signupResult} isOpen={props.isSignupModalOpen} onClose={props.onClose} />
     </>
   );
 };
