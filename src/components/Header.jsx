@@ -5,10 +5,10 @@ import logo from '../images/logo.svg';
 const Header = (props) => {
   let headerLink;
 
-  if (props.page === 'login') {
-    headerLink = <NavLink to='/register' className='header__link'>Регистрация</NavLink>
-  } else if (props.page === 'register') {
-    headerLink = <NavLink to='/login' className='header__link'>Войти</NavLink>
+  if (props.page === 'signin') {
+    headerLink = <NavLink to='/signup' className='header__link'>Регистрация</NavLink>
+  } else if (props.page === 'signup') {
+    headerLink = <NavLink to='/signin' className='header__link'>Войти</NavLink>
   } else if (props.page === 'feed') {
     headerLink = 
     <nav className='header__nav'>
@@ -20,11 +20,6 @@ const Header = (props) => {
   return (
     <header className='header'>
       <img src={logo} alt='логотип место' className='header__logo' />
-      {/* {props.page === 'login' ? (
-        <NavLink to='/login' className='header__link'>Войти</NavLink>
-      ) : (
-        <NavLink to='/register' className='header__link'>Регистрация</NavLink>
-      )} */}
       {headerLink}
     </header>
   );

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from './Header.jsx';
-import SignupResultModal from './SignupResultModal.jsx';
+import InfoTooltip from './InfoTooltip.jsx';
 
 const Register = (props) => {
   const [userData, setUserData] = useState({
@@ -27,7 +27,7 @@ const Register = (props) => {
 
   return (
     <>
-      <Header page='register' />
+      <Header page='signup' />
       <div className='login'>
         <div className='login__containter'>
           <h1 className='login__title'>Регистрация</h1>
@@ -60,14 +60,14 @@ const Register = (props) => {
         <div className='login__button-containter'>
           <div className='login__button-caption'>
             <span>Уже зарегистрированы?</span>
-            <Link to='/login' className='login__link'>
+            <Link to='/signin' className='login__link'>
               Войти
             </Link>
           </div>
         </div>
       </div>
 
-      <SignupResultModal signupResult={props.signupResult} isOpen={props.isSignupModalOpen} onClose={props.onClose} />
+      <InfoTooltip signupResult={props.signupResult} isOpen={props.isSignupModalOpen} onClose={props.onClose} />
     </>
   );
 };

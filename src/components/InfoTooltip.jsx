@@ -2,7 +2,7 @@ import React from 'react';
 import resultFail from '../images/signup-modal-result-fail.svg';
 import resultSuccess from '../images/signup-modal-result-success.svg';
 
-const SignupResultModal = (props) => {
+const InfoTooltip = (props) => {
   let resultText;
   let resultImg;
 
@@ -24,4 +24,4 @@ const SignupResultModal = (props) => {
   );
 };
 
-export default SignupResultModal;
+export default InfoTooltip;

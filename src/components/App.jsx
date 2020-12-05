@@ -161,7 +161,7 @@ const App = () => {
   const closeSignupModal = () => {
     if (signupResult) {
       setIsSignupModalOpen(false);
-      history.push('/login');
+      history.push('/signin');
     } else {
       setIsSignupModalOpen(false);
     }
@@ -222,11 +222,11 @@ const App = () => {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <Switch>
-        <Route exact path='/login'>
+        <Route exact path='/signin'>
           <Login handleLogin={handleLogin} />
         </Route>
 
-        <Route exact path='/register'>
+        <Route exact path='/signup'>
           <Register
             handleSignup={handleSignup}
             signupResult={signupResult}
@@ -251,10 +251,10 @@ const App = () => {
         />
 
         <Route exact path='/'>
-          {loggedIn ? <Redirect to='/feed' /> : <Redirect to='/login' />}
+          {loggedIn ? <Redirect to='/feed' /> : <Redirect to='/signin' />}
         </Route>
 
-        <Route path='/*'>{loggedIn ? <Redirect to='/feed' /> : <Redirect to='/login' />}</Route>
+        <Route path='/*'>{loggedIn ? <Redirect to='/feed' /> : <Redirect to='/signin' />}</Route>
       </Switch>
 
       <EditProfilePopup
