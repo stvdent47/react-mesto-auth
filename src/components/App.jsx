@@ -62,7 +62,7 @@ const App = () => {
   const openAddPlaceModal = () => {
     setIsAddPlacePopupOpen(true);
   };
-
+  
   const handleAddPlace = (data) => {
     setAddCardSubmitButtonState('Сохранение...');
     api
@@ -157,13 +157,16 @@ const App = () => {
 
   const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
   const [signupResult, setSignupResult] = useState(false);
+  const [resultText, setResultText] = useState('');
 
   const closeSignupModal = () => {
     if (signupResult) {
       setIsSignupModalOpen(false);
+      setResultText('');
       history.push('/signin');
     } else {
       setIsSignupModalOpen(false);
+      setResultText('');
     }
   };
 
@@ -172,9 +175,11 @@ const App = () => {
       .signup(email, password)
       .then(() => {
         setSignupResult(true);
+        setResultText('Вы успешно зарегистрировались!');
         setIsSignupModalOpen(true);
       })
       .catch((err) => {
+        setResultText('Что-то пошло не так! Попробуйте ещё раз.');
         setIsSignupModalOpen(true);
         console.error(err);
       });
@@ -217,6 +222,7 @@ const App = () => {
       })
       .catch((err) => console.error(err));
     tokenCheck();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -232,6 +238,7 @@ const App = () => {
             signupResult={signupResult}
             isSignupModalOpen={isSignupModalOpen}
             onClose={closeSignupModal}
+            resultText={resultText}
           />
         </Route>
 
