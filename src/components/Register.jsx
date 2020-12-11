@@ -67,7 +67,7 @@ const Register = (props) => {
         </div>
       </div>
 
-      <InfoTooltip signupResult={props.signupResult} isOpen={props.isSignupModalOpen} onClose={props.onClose} />
+      <InfoTooltip signupResult={props.signupResult} isOpen={props.isSignupModalOpen} onClose={props.onClose} resultText={props.resultText} />
     </>
   );
 };
