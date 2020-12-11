@@ -3,14 +3,12 @@ import resultFail from '../images/signup-modal-result-fail.svg';
 import resultSuccess from '../images/signup-modal-result-success.svg';
 
 const InfoTooltip = (props) => {
-  let resultText;
+  let resultText = props.resultText;
   let resultImg;
 
   if (props.signupResult === true) {
-    resultText = 'Вы успешно зарегистрировались!';
     resultImg = resultSuccess;
   } else {
-    resultText = 'Что-то пошло не так! Попробуйте ещё раз.';
     resultImg = resultFail;
   }
   return (
