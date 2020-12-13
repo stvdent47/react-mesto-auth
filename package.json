@@ -2,7 +2,6 @@
   "name": "react-mesto-auth",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://stvdent47.github.io/react-mesto-auth",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -18,7 +17,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "ghdeploy": "gh-pages -d build",
+    "deploy": "npm run build && scp -r ./build/* stvdent47@84.201.133.252:/home/stvdent47/yndx/client"
   },
   "eslintConfig": {
     "extends": "react-app"
